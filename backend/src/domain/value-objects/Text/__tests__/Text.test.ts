@@ -36,14 +36,6 @@ describe('Text', () => {
     expect(() => Text.create(longText, options)).toThrow(/length.*exceed/);
   });
 
-  it('should throw error if not empty text is allowed', async () => {
-    const emptyText = '';
-    const options = { canBeEmpty: false };
-
-    expect(() => Text.create(emptyText, options)).toThrow(ValidationDomainError);
-    expect(() => Text.create(emptyText, options)).toThrow(/cannot be empty/);
-  });
-
   describe('Equality checks', () => {
     it('should consider two Text instances with the same value as equal', async () => {
       const textValue = 'Same text';
@@ -65,6 +57,16 @@ describe('Text', () => {
       const text2 = Text.create('text');
 
       expect(text1.equals(text2)).toBe(false);
+    });
+  });
+
+  describe('Errors', () => {
+    it('should throw error if not empty text is allowed', async () => {
+      const emptyText = '';
+      const options = { canBeEmpty: false };
+
+      expect(() => Text.create(emptyText, options)).toThrow(ValidationDomainError);
+      expect(() => Text.create(emptyText, options)).toThrow(/cannot be empty/);
     });
   });
 });
