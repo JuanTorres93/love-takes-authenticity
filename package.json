@@ -10,7 +10,9 @@
     "frontend-mobile"
   ],
   "scripts": {
-    "test": "npm run test -w backend"
+    "test": "npm run test -w backend",
+    "test:watch": "npm run test:watch -w backend",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
   },
   "homepage": "https://github.com/JuanTorres93/love-takes-authenticity#readme",
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2"
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "husky": "^9.1.7"
   }
 }

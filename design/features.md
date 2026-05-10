@@ -10,6 +10,8 @@ Although hard to change, it can be done with effort.
 
 ## User Profile
 
+User and UserProfile must be separate entities.
+
 Users needs to have a populatable profile in which define their personal/dating information.
 
 ## Conversation
