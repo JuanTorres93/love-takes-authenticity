@@ -10,8 +10,6 @@ export abstract class ValueObject<T> {
       return false;
     }
 
-    return (
-      JSON.stringify(this.props) === JSON.stringify(otherValueObject.props)
-    );
+    return JSON.stringify(this.props) === JSON.stringify(otherValueObject.props);
   }
 }

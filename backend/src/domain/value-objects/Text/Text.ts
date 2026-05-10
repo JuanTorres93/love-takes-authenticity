@@ -1,5 +1,5 @@
-import { ValueObject } from '../ValueObject';
 import { ValidationDomainError } from '../../common/domainErrors';
+import { ValueObject } from '../ValueObject';
 
 type TextProps = {
   value: string;
