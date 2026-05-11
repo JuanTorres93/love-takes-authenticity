@@ -1,4 +1,6 @@
 import { conversationTestCreateProps } from '../../../../../tests/createEntitiesTest/conversationCreate';
+import { createTestMessage } from '../../../../../tests/createEntitiesTest/messageCreate';
+import { ValidationDomainError } from '../../../common/domainErrors';
 import { Conversation, ConversationCreateProps } from '../Conversation';
 
 describe('Conversation', () => {
@@ -17,6 +19,67 @@ describe('Conversation', () => {
     expect(conversation).toBeInstanceOf(Conversation);
   });
 
+  describe('Behaviour', () => {
+    it('should order messages chronologically on creation', async () => {
+      const newConversation = Conversation.create({
+        ...validConversationProps,
+        messages: [
+          createTestMessage({
+            overrideProps: {
+              content: 'Newest message',
+              sentAt: new Date(), // Sent now
+            },
+          }),
+          createTestMessage({
+            overrideProps: {
+              content: 'Oldest message',
+              sentAt: new Date(Date.now() - 2000), // Sent 2 seconds ago
+            },
+          }),
+          createTestMessage({
+            overrideProps: {
+              content: 'Second message',
+              sentAt: new Date(Date.now() - 1000), // Sent 1 second ago
+            },
+          }),
+        ],
+      });
+
+      const messages = newConversation.messages;
+
+      expect(messages[0].content).toBe('Newest message');
+      expect(messages[1].content).toBe('Second message');
+      expect(messages[2].content).toBe('Oldest message');
+    });
+
+    it('should add a new message', async () => {
+      const newMessage = createTestMessage();
+
+      const messageCountBefore = conversation.messages.length;
+
+      conversation.addMessage(newMessage);
+
+      const messageCountAfter = conversation.messages.length;
+
+      expect(messageCountAfter).toBe(messageCountBefore + 1);
+    });
+
+    it('should sort messages on addition', async () => {
+      const newMessage = createTestMessage({
+        overrideProps: {
+          content: 'Newest message',
+          sentAt: new Date(), // Sent now
+        },
+      });
+
+      conversation.addMessage(newMessage);
+
+      const messages = conversation.messages;
+
+      expect(messages[0].content).toBe('Newest message');
+    });
+  });
+
   describe('Getters', () => {
     it('should return the correct id', () => {
       expect(conversation.id).toBe(validConversationProps.id);
@@ -30,7 +93,21 @@ describe('Conversation', () => {
     });
 
     it('should return an array of messages', async () => {
-      expect(conversation.messages).toEqual(validConversationProps.messages);
+      expect(Array.isArray(conversation.messages)).toBe(true);
+    });
+  });
+
+  describe('Errors', () => {
+    it('should throw error if trying to add something other than a Message', async () => {
+      expect(() => {
+        // @ts-expect-error
+        conversation.addMessage({});
+      }).toThrow(ValidationDomainError);
+
+      expect(() => {
+        // @ts-expect-error
+        conversation.addMessage({});
+      }).toThrow(/Conversation: you can only add instances of Message/);
     });
   });
 });

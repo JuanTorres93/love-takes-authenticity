@@ -34,13 +34,28 @@ export class Conversation {
       oneParticipantId: Id.create(props.oneParticipantId),
       anotherParticipantId: Id.create(props.anotherParticipantId),
 
-      messages: props.messages.map((message) => Message.create(message)),
+      messages: sortMessagesByMostRecentInPositionZero(props.messages.map(Message.create)),
 
       createdAt: DomainDate.create(props.createdAt),
       updatedAt: DomainDate.create(props.updatedAt),
     };
 
     return new Conversation(entityProps);
+  }
+
+  addMessage(message: Message) {
+    if (!(message instanceof Message))
+      throw new ValidationDomainError('Conversation: you can only add instances of Message');
+
+    this.props.messages.push(message);
+
+    this.sortEntityMessages();
+
+    this.props.updatedAt = DomainDate.create(new Date());
+  }
+
+  private sortEntityMessages() {
+    sortMessagesByMostRecentInPositionZero(this.props.messages);
   }
 
   // Getters
@@ -63,4 +78,10 @@ export class Conversation {
   get updatedAt() {
     return this.props.updatedAt.value;
   }
+}
+
+function sortMessagesByMostRecentInPositionZero(messages: Message[]) {
+  messages.sort((a, b) => b.sentAt.getTime() - a.sentAt.getTime());
+
+  return messages;
 }
