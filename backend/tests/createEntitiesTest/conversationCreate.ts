@@ -29,9 +29,9 @@ export const conversationTestCreateProps: ConversationCreateProps = {
   updatedAt: new Date(),
 };
 
-export function createTestConversation({
-  overrideProps,
-}: { overrideProps?: Partial<ConversationCreateProps> } = {}): Conversation {
+export function createTestConversation(
+  overrideProps?: Partial<ConversationCreateProps>,
+): Conversation {
   const props = { ...conversationTestCreateProps, ...overrideProps };
 
   return Conversation.create(props);
