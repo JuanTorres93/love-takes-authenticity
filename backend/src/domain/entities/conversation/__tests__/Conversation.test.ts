@@ -25,22 +25,16 @@ describe('Conversation', () => {
         ...validConversationProps,
         messages: [
           createTestMessage({
-            overrideProps: {
-              content: 'Newest message',
-              sentAt: new Date(), // Sent now
-            },
+            content: 'Newest message',
+            sentAt: new Date(), // Sent now
           }),
           createTestMessage({
-            overrideProps: {
-              content: 'Oldest message',
-              sentAt: new Date(Date.now() - 2000), // Sent 2 seconds ago
-            },
+            content: 'Oldest message',
+            sentAt: new Date(Date.now() - 2000), // Sent 2 seconds ago
           }),
           createTestMessage({
-            overrideProps: {
-              content: 'Second message',
-              sentAt: new Date(Date.now() - 1000), // Sent 1 second ago
-            },
+            content: 'Second message',
+            sentAt: new Date(Date.now() - 1000), // Sent 1 second ago
           }),
         ],
       });
@@ -66,10 +60,8 @@ describe('Conversation', () => {
 
     it('should sort messages on addition', async () => {
       const newMessage = createTestMessage({
-        overrideProps: {
-          content: 'Newest message',
-          sentAt: new Date(), // Sent now
-        },
+        content: 'Newest message',
+        sentAt: new Date(), // Sent now
       });
 
       conversation.addMessage(newMessage);
@@ -114,9 +106,7 @@ describe('Conversation', () => {
   it('should throw error if a no participant tries to send a message', async () => {
     const nonParticipantId = 'non-participant-id';
     const newMessage = createTestMessage({
-      overrideProps: {
-        senderId: nonParticipantId,
-      },
+      senderId: nonParticipantId,
     });
 
     expect(() => {

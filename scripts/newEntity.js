@@ -115,9 +115,9 @@ export const entityTestCreateProps: EntityCreateProps = {
   updatedAt: new Date(),
 };
 
-export function createTestEntity({
-  overrideProps,
-}: { overrideProps?: Partial<EntityCreateProps> } = {}): Entity {
+export function createTestEntity(
+  overrideProps?: Partial<EntityCreateProps>,
+): Entity {
   const props = { ...entityTestCreateProps, ...overrideProps };
 
   return Entity.create(props);
