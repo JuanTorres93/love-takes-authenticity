@@ -1,6 +1,6 @@
 import { conversationTestCreateProps } from '../../../../../tests/createEntitiesTest/conversationCreate';
 import { createTestMessage } from '../../../../../tests/createEntitiesTest/messageCreate';
-import { ValidationDomainError } from '../../../common/domainErrors';
+import { PermissionDomainError, ValidationDomainError } from '../../../common/domainErrors';
 import { Conversation, ConversationCreateProps } from '../Conversation';
 
 describe('Conversation', () => {
@@ -109,5 +109,22 @@ describe('Conversation', () => {
         conversation.addMessage({});
       }).toThrow(/Conversation: you can only add instances of Message/);
     });
+  });
+
+  it('should throw error if a no participant tries to send a message', async () => {
+    const nonParticipantId = 'non-participant-id';
+    const newMessage = createTestMessage({
+      overrideProps: {
+        senderId: nonParticipantId,
+      },
+    });
+
+    expect(() => {
+      conversation.addMessage(newMessage);
+    }).toThrow(PermissionDomainError);
+
+    expect(() => {
+      conversation.addMessage(newMessage);
+    }).toThrow(/Conversation: only participants can send messages/);
   });
 });

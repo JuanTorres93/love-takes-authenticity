@@ -1,4 +1,4 @@
-import { ValidationDomainError } from '../../common/domainErrors';
+import { PermissionDomainError, ValidationDomainError } from '../../common/domainErrors';
 import { DomainDate } from '../../value-objects/DomainDate/DomainDate';
 import { Id } from '../../value-objects/Id/Id';
 import { Message } from '../message/Message';
@@ -47,6 +47,8 @@ export class Conversation {
     if (!(message instanceof Message))
       throw new ValidationDomainError('Conversation: you can only add instances of Message');
 
+    this.checkIfSenderIsParticipantAndThrowOtherwise(message.senderId);
+
     this.props.messages.push(message);
 
     this.sortEntityMessages();
@@ -56,6 +58,12 @@ export class Conversation {
 
   private sortEntityMessages() {
     sortMessagesByMostRecentInPositionZero(this.props.messages);
+  }
+
+  private checkIfSenderIsParticipantAndThrowOtherwise(senderId: string) {
+    if (!this.participantIds.includes(senderId)) {
+      throw new PermissionDomainError('Conversation: only participants can send messages');
+    }
   }
 
   // Getters

@@ -5,3 +5,5 @@ export function isDomainError(err: Error) {
 }
 
 export class ValidationDomainError extends DomainError {}
+
+export class PermissionDomainError extends DomainError {}
