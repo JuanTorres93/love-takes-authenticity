@@ -12,7 +12,8 @@
   "scripts": {
     "test": "npm run test -w backend",
     "test:watch": "npm run test:watch -w backend",
-    "prepare": "husky"
+    "prepare": "husky",
+    "new-entity": "node scripts/newEntity.js"
   },
   "repository": {
     "type": "git",
