@@ -2,7 +2,7 @@ import { User } from '../../domain/entities/user/User';
 import { UsersRepo } from '../../domain/repos/UsersRepo.port';
 
 export class MemoryUsersRepo implements UsersRepo {
-  private users: Map<string, any> = new Map();
+  private users: Map<string, User> = new Map();
 
   async save(user: User): Promise<void> {
     this.users.set(user.id, user);
