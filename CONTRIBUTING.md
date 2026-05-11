@@ -46,6 +46,30 @@ infrastructure → interface-adapters → application → domain
 - Prefer domain types over primitives
 - Use prettier
 
+## 🏗️ Scaffolding a new entity
+
+Use the included script to generate the boilerplate for a new domain entity:
+
+```bash
+npm run new-entity EntityName
+# Example:
+npm run new-entity Message
+```
+
+This creates three files:
+
+```
+backend/src/domain/entities/entityname/
+  EntityName.ts                         # Entity class with typed props and getters
+  __tests__/
+    EntityName.test.ts                  # Vitest test file with a basic describe block
+
+backend/tests/createEntitiesTest/
+  entityNameCreate.ts                   # Placeholder test props for the entity
+```
+
+All files use `Entity` as a placeholder that is replaced with your entity name. They include `TODO` comments to guide implementation — replace primitive types with Value Objects, add validation, and fill in your props.
+
 ## 🔁 Pull Requests
 
 - Must pass tests
