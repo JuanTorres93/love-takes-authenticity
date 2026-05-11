@@ -21,9 +21,9 @@ export const userProfileTestCreateProps: UserProfileCreateProps = {
   updatedAt: new Date(),
 };
 
-export function createTestUserProfile({
-  overrideProps,
-}: { overrideProps?: Partial<UserProfileCreateProps> } = {}): UserProfile {
+export function createTestUserProfile(
+  overrideProps: Partial<UserProfileCreateProps> = {},
+): UserProfile {
   const props = { ...userProfileTestCreateProps, ...overrideProps };
 
   return UserProfile.create(props);

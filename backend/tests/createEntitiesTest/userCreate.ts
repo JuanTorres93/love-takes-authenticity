@@ -10,9 +10,7 @@ export const userTestCreateProps = {
   updatedAt: new Date(),
 };
 
-export function createTestUser({
-  overrideProps,
-}: { overrideProps?: Partial<UserCreateProps> } = {}) {
+export function createTestUser(overrideProps: Partial<UserCreateProps> = {}) {
   const props = { ...userTestCreateProps, ...overrideProps };
 
   return User.create(props);

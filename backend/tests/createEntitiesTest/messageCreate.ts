@@ -9,9 +9,7 @@ export const messageTestCreateProps: MessageCreateProps = {
   sentAt: new Date(),
 };
 
-export function createTestMessage({
-  overrideProps,
-}: { overrideProps?: Partial<MessageCreateProps> } = {}): Message {
+export function createTestMessage(overrideProps: Partial<MessageCreateProps> = {}): Message {
   const props = { ...messageTestCreateProps, ...overrideProps };
 
   return Message.create(props);
