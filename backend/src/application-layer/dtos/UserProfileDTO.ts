@@ -5,7 +5,7 @@ export type UserProfileDTO = {
   userId: string;
 
   name: string;
-  description: string;
+  bio: string;
 
   imagesUrls: string[];
   corePersonalValues: string[];
@@ -20,7 +20,7 @@ export function toUserProfileDTO(userProfile: UserProfile): UserProfileDTO {
     userId: userProfile.userId,
 
     name: userProfile.name,
-    description: userProfile.description,
+    bio: userProfile.bio,
 
     imagesUrls: userProfile.imagesUrls,
     corePersonalValues: userProfile.corePersonalValues,

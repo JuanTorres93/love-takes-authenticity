@@ -35,10 +35,10 @@ describe('UserProfile', () => {
       expect(userProfile.name).toBe(validUserProfileProps.name);
     });
 
-    it('should have a valid description', async () => {
-      expect(userProfile.description).not.toBe(undefined);
+    it('should have a valid bio', async () => {
+      expect(userProfile.bio).not.toBe(undefined);
 
-      expect(userProfile.description).toBe(validUserProfileProps.description);
+      expect(userProfile.bio).toBe(validUserProfileProps.bio);
     });
 
     it('should have an array of imagesUrls', async () => {

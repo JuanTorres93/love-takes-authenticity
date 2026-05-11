@@ -3,7 +3,7 @@ import { DomainDate } from '../../value-objects/DomainDate/DomainDate';
 import { Id } from '../../value-objects/Id/Id';
 import { Text } from '../../value-objects/Text/Text';
 import {
-  userProfileDescriptionTextOptions,
+  userProfileBioTextOptions,
   userProfileImageUrlTextOptions,
   userProfileNameTextOptions,
 } from './valueObjectsOptions';
@@ -17,7 +17,7 @@ export class UserProfile {
       userId: Id.create(props.userId),
 
       name: Text.create(props.name, userProfileNameTextOptions),
-      description: Text.create(props.description, userProfileDescriptionTextOptions),
+      bio: Text.create(props.bio, userProfileBioTextOptions),
 
       imagesUrls: props.imagesUrls.map((url) => Text.create(url, userProfileImageUrlTextOptions)),
 
@@ -43,8 +43,8 @@ export class UserProfile {
     return this.props.name.value;
   }
 
-  get description() {
-    return this.props.description.value;
+  get bio() {
+    return this.props.bio.value;
   }
 
   get imagesUrls() {
@@ -69,7 +69,7 @@ export type UserProfileCreateProps = {
   userId: string;
 
   name: string;
-  description: string;
+  bio: string;
 
   imagesUrls: string[];
   corePersonalValues: string[];
@@ -83,7 +83,7 @@ export type UserProfileProps = {
   userId: Id;
 
   name: Text;
-  description: Text;
+  bio: Text;
 
   imagesUrls: Text[];
   corePersonalValues: CorePersonalValue[];

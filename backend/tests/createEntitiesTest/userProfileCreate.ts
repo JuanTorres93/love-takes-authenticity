@@ -10,7 +10,7 @@ export const userProfileTestCreateProps: UserProfileCreateProps = {
   userId: testUserId,
 
   name: 'Test User',
-  description: 'This is a test user profile',
+  bio: 'This is a test user profile',
 
   imagesUrls: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
   corePersonalValues: allCorePersonalValues.slice(0, 3),

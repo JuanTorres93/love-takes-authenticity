@@ -4,7 +4,7 @@ export const userProfileNameTextOptions: TextOptions = {
   canBeEmpty: false,
   maxLength: 100,
 };
-export const userProfileDescriptionTextOptions: TextOptions = {
+export const userProfileBioTextOptions: TextOptions = {
   canBeEmpty: true,
   maxLength: 500,
 };
