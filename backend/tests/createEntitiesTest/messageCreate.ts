@@ -4,6 +4,7 @@ import { testUserId } from './userCreate';
 export const messageTestCreateProps: MessageCreateProps = {
   id: 'message-id',
   senderId: testUserId,
+  conversationId: 'conversation-id',
   content: 'Hello, this is a test message.',
   sentAt: new Date(),
 };
