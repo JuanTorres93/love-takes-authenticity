@@ -4,6 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
+// ---- Validate input ----
+
 const entityRaw = process.argv[2];
 
 if (!entityRaw) {
@@ -12,24 +14,18 @@ if (!entityRaw) {
   process.exit(1);
 }
 
+// ---- Derived names ----
+
 const dirName = entityRaw.toLowerCase();
 const entityCamel = entityRaw[0].toLowerCase() + entityRaw.slice(1);
 
-const entitiesRoot = path.resolve(__dirname, '..', 'backend', 'src', 'domain', 'entities');
-const entityDir = path.join(entitiesRoot, dirName);
-const entityTsPath = path.join(entityDir, `${entityRaw}.ts`);
-const testTsPath = path.join(entityDir, '__tests__', `${entityRaw}.test.ts`);
+// ---- Roots ----
 
-for (const filePath of [entityTsPath, testTsPath]) {
-  if (fs.existsSync(filePath)) {
-    console.error(
-      `❌ Error: '${path.relative(process.cwd(), filePath)}' already exists. Aborting to avoid overwriting.`,
-    );
-    process.exit(1);
-  }
-}
-
-fs.mkdirSync(path.join(entityDir, '__tests__'), { recursive: true });
+const backendRoot = path.resolve(__dirname, '..', 'backend');
+const entitiesRoot = path.join(backendRoot, 'src', 'domain', 'entities');
+const dtosRoot = path.join(backendRoot, 'src', 'application-layer', 'dtos');
+const createTestsRoot = path.join(backendRoot, 'tests', 'createEntitiesTest');
+const dtoPropsRoot = path.join(backendRoot, 'tests', 'dtoProperties');
 
 // ---- Templates ----
 
@@ -90,7 +86,7 @@ export class Entity {
 }
 `;
 
-const TEST_TEMPLATE = `import { entityTestCreateProps } from '../../../../../tests/createEntitiesTest/entityCreate';
+const ENTITY_TEST_TEMPLATE = `import { entityTestCreateProps } from '../../../../../tests/createEntitiesTest/entityCreate';
 import { Entity, EntityCreateProps } from '../Entity';
 
 describe('Entity', () => {
@@ -110,7 +106,79 @@ describe('Entity', () => {
 });
 `;
 
-// ---- Apply replacements (order matters) ----
+const ENTITY_TEST_PROPS_TEMPLATE = `import { Entity, EntityCreateProps } from '../../src/domain/entities/entityname/Entity';
+
+export const entityTestCreateProps: EntityCreateProps = {
+  id: 'entity-id',
+  // TODO add more props
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+export function createTestEntity({
+  overrideProps,
+}: { overrideProps?: Partial<EntityCreateProps> } = {}): Entity {
+  const props = { ...entityTestCreateProps, ...overrideProps };
+
+  return Entity.create(props);
+}
+`;
+
+const DTO_TEMPLATE = `import { Entity } from '../../domain/entities/entityname/Entity';
+
+// TODO update props
+export type EntityDTO = {
+  id: string;
+};
+
+export function toEntityDTO(entity: Entity): EntityDTO {
+  return {
+    id: entity.id,
+  };
+}
+`;
+
+const DTO_TEST_TEMPLATE = `import { createTestEntity } from '../../../../tests/createEntitiesTest/entityCreate';
+import { entityDTOProperties } from '../../../../tests/dtoProperties/entityDtoProperties';
+import { Entity } from '../../../domain/entities/entityname/Entity';
+import { EntityDTO, toEntityDTO } from '../EntityDTO';
+
+describe('EntityDTO', () => {
+  let entity: Entity;
+  let entityDTO: EntityDTO;
+
+  beforeEach(() => {
+    entity = createTestEntity();
+  });
+
+  describe('toEntityDTO', () => {
+    beforeEach(() => {
+      entityDTO = toEntityDTO(entity);
+    });
+
+    it('should have a prop for each entity getter', () => {
+      for (const getter of entityDTOProperties) {
+        expect(entityDTO).toHaveProperty(getter);
+      }
+    });
+  });
+});
+`;
+
+const DTO_PROPS_TEMPLATE = `import { getGetters } from '../../src/application-layer/dtos/__tests__/_getGettersUtil';
+import { Entity } from '../../src/domain/entities/entityname/Entity';
+import { entityTestCreateProps } from '../createEntitiesTest/entityCreate';
+
+const sampleEntity = Entity.create({
+  ...entityTestCreateProps,
+});
+
+const allEntityGetters = getGetters(sampleEntity);
+
+export const entityDTOProperties = [...allEntityGetters];
+`;
+
+// ---- Replacements (order matters — most specific first) ----
 
 function applyReplacements(content, replacements) {
   return replacements.reduce(
@@ -119,52 +187,74 @@ function applyReplacements(content, replacements) {
   );
 }
 
-const entityContent = applyReplacements(ENTITY_TEMPLATE, [
+const REPLACEMENTS = [
+  [/\bcreateTestEntity\b/g, `createTest${entityRaw}`],
+  [/\bentityTestCreateProps\b/g, `${entityCamel}TestCreateProps`],
+  [/\bentityCreate\b/g, `${entityCamel}Create`],
   [/\bEntityCreateProps\b/g, `${entityRaw}CreateProps`],
   [/\bEntityProps\b/g, `${entityRaw}Props`],
-  [/\bEntity\b/g, entityRaw],
-]);
-
-const testContent = applyReplacements(TEST_TEMPLATE, [
-  [/\bentityTestCreateProps\b/g, `${entityCamel}TestCreateProps`],
-  [/entityCreate\b/g, `${entityCamel}Create`],
-  [/\bEntityCreateProps\b/g, `${entityRaw}CreateProps`],
+  [/\bEntityDTO\b/g, `${entityRaw}DTO`],
+  [/\btoEntityDTO\b/g, `to${entityRaw}DTO`],
+  [/\bentityDTOProperties\b/g, `${entityCamel}DTOProperties`],
+  [/\bentityDtoProperties\b/g, `${entityCamel}DtoProperties`],
   [/\bEntity\b/g, entityRaw],
   [/\bentity\b/g, entityCamel],
+  [/entityname/g, dirName],
   [/\bvalidEntityProps\b/g, `valid${entityRaw}Props`],
   [/valid entity/g, `valid ${entityCamel}`],
-]);
+];
 
-const testsRoot = path.resolve(__dirname, '..', 'backend', 'tests', 'createEntitiesTest');
-const propsTsPath = path.join(testsRoot, `${entityCamel}Create.ts`);
+// ---- File definitions ----
 
-if (fs.existsSync(propsTsPath)) {
-  console.error(
-    `❌ Error: '${path.relative(process.cwd(), propsTsPath)}' already exists. Aborting to avoid overwriting.`,
-  );
-  process.exit(1);
+const files = [
+  {
+    filePath: path.join(entitiesRoot, dirName, `${entityRaw}.ts`),
+    template: ENTITY_TEMPLATE,
+    dir: path.join(entitiesRoot, dirName),
+  },
+  {
+    filePath: path.join(entitiesRoot, dirName, '__tests__', `${entityRaw}.test.ts`),
+    template: ENTITY_TEST_TEMPLATE,
+    dir: path.join(entitiesRoot, dirName, '__tests__'),
+  },
+  {
+    filePath: path.join(createTestsRoot, `${entityCamel}Create.ts`),
+    template: ENTITY_TEST_PROPS_TEMPLATE,
+    dir: createTestsRoot,
+  },
+  {
+    filePath: path.join(dtosRoot, `${entityRaw}DTO.ts`),
+    template: DTO_TEMPLATE,
+    dir: dtosRoot,
+  },
+  {
+    filePath: path.join(dtosRoot, '__tests__', `${entityRaw}DTO.test.ts`),
+    template: DTO_TEST_TEMPLATE,
+    dir: path.join(dtosRoot, '__tests__'),
+  },
+  {
+    filePath: path.join(dtoPropsRoot, `${entityCamel}DtoProperties.ts`),
+    template: DTO_PROPS_TEMPLATE,
+    dir: dtoPropsRoot,
+  },
+];
+
+// ---- Check for existing files ----
+
+for (const { filePath } of files) {
+  if (fs.existsSync(filePath)) {
+    console.error(
+      `❌ Error: '${path.relative(process.cwd(), filePath)}' already exists. Aborting to avoid overwriting.`,
+    );
+    process.exit(1);
+  }
 }
 
-const propsContent = `import { ${entityRaw}CreateProps } from '../../src/domain/entities/${dirName}/${entityRaw}';
-
-export const ${entityCamel}TestCreateProps: ${entityRaw}CreateProps = {
-  id: '${entityCamel}-id',
-  // TODO add more props
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
-`;
-
-fs.mkdirSync(testsRoot, { recursive: true });
-fs.writeFileSync(entityTsPath, entityContent, 'utf8');
-fs.writeFileSync(testTsPath, testContent, 'utf8');
-fs.writeFileSync(propsTsPath, propsContent, 'utf8');
-
-const relEntity = path.relative(process.cwd(), entityTsPath);
-const relTest = path.relative(process.cwd(), testTsPath);
-const relProps = path.relative(process.cwd(), propsTsPath);
+// ---- Write files ----
 
 console.log('✅ Scaffolding created:');
-console.log(`  - ${relEntity}`);
-console.log(`  - ${relTest}`);
-console.log(`  - ${relProps}`);
+for (const { filePath, template, dir } of files) {
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(filePath, applyReplacements(template, REPLACEMENTS), 'utf8');
+  console.log(`  - ${path.relative(process.cwd(), filePath)}`);
+}

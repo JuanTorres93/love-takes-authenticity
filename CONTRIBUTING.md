@@ -56,7 +56,7 @@ npm run new-entity EntityName
 npm run new-entity Message
 ```
 
-This creates three files:
+This creates six files:
 
 ```
 backend/src/domain/entities/entityname/
@@ -64,8 +64,16 @@ backend/src/domain/entities/entityname/
   __tests__/
     EntityName.test.ts                  # Vitest test file with a basic describe block
 
+backend/src/application-layer/dtos/
+  EntityNameDTO.ts                      # DTO type and toEntityNameDTO mapper function
+  __tests__/
+    EntityNameDTO.test.ts               # Vitest test file for the DTO
+
 backend/tests/createEntitiesTest/
-  entityNameCreate.ts                   # Placeholder test props for the entity
+  entityNameCreate.ts                   # Test props and createTestEntityName() factory
+
+backend/tests/dtoProperties/
+  entityNameDtoProperties.ts            # DTO property list derived from entity getters
 ```
 
 All files use `Entity` as a placeholder that is replaced with your entity name. They include `TODO` comments to guide implementation — replace primitive types with Value Objects, add validation, and fill in your props.
