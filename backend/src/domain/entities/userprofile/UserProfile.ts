@@ -1,3 +1,4 @@
+import { ValidationDomainError } from '../../common/domainErrors';
 import { CorePersonalValue } from '../../value-objects/CorePersonalValue/CorePersonalValue';
 import { DomainDate } from '../../value-objects/DomainDate/DomainDate';
 import { Id } from '../../value-objects/Id/Id';
@@ -12,6 +13,8 @@ export class UserProfile {
   private constructor(private readonly props: UserProfileProps) {}
 
   static create(props: UserProfileCreateProps): UserProfile {
+    if (!props.birthDate) throw new ValidationDomainError('UserProfile: birthDate is required');
+
     const entityProps: UserProfileProps = {
       id: Id.create(props.id),
       userId: Id.create(props.userId),
@@ -22,6 +25,8 @@ export class UserProfile {
       imagesUrls: props.imagesUrls.map((url) => Text.create(url, userProfileImageUrlTextOptions)),
 
       corePersonalValues: props.corePersonalValues.map((value) => CorePersonalValue.create(value)),
+
+      birthDate: DomainDate.create(props.birthDate),
 
       createdAt: DomainDate.create(props.createdAt),
       updatedAt: DomainDate.create(props.updatedAt),
@@ -55,6 +60,10 @@ export class UserProfile {
     return this.props.corePersonalValues.map((corePersonalValue) => corePersonalValue.value);
   }
 
+  get birthDate() {
+    return this.props.birthDate.value;
+  }
+
   get createdAt() {
     return this.props.createdAt.value;
   }
@@ -74,6 +83,8 @@ export type UserProfileCreateProps = {
   imagesUrls: string[];
   corePersonalValues: string[];
 
+  birthDate: Date;
+
   createdAt: Date;
   updatedAt: Date;
 };
@@ -87,6 +98,8 @@ export type UserProfileProps = {
 
   imagesUrls: Text[];
   corePersonalValues: CorePersonalValue[];
+
+  birthDate: DomainDate;
 
   createdAt: DomainDate;
   updatedAt: DomainDate;

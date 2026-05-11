@@ -1,4 +1,5 @@
 import { userProfileTestCreateProps } from '../../../../../tests/createEntitiesTest/userProfileCreate';
+import { ValidationDomainError } from '../../../common/domainErrors';
 import { UserProfile, UserProfileCreateProps } from '../UserProfile';
 
 describe('UserProfile', () => {
@@ -59,6 +60,12 @@ describe('UserProfile', () => {
       );
     });
 
+    it('should have a birthDate', async () => {
+      expect(userProfile.birthDate).not.toBe(undefined);
+
+      expect(userProfile.birthDate).toEqual(validUserProfileProps.birthDate);
+    });
+
     it('should have a valid createdAt', async () => {
       expect(userProfile.createdAt).not.toBe(undefined);
 
@@ -69,6 +76,21 @@ describe('UserProfile', () => {
       expect(userProfile.updatedAt).not.toBe(undefined);
 
       expect(userProfile.updatedAt).toEqual(validUserProfileProps.updatedAt);
+    });
+  });
+
+  describe('Errors', () => {
+    it('should throw error if birthDate is not provided', async () => {
+      const invalidUserProfileProps = {
+        ...validUserProfileProps,
+        birthDate: undefined as any,
+      };
+
+      expect(() => UserProfile.create(invalidUserProfileProps)).toThrow(ValidationDomainError);
+
+      expect(() => UserProfile.create(invalidUserProfileProps)).toThrow(
+        /UserProfile: birthDate.*required/,
+      );
     });
   });
 });

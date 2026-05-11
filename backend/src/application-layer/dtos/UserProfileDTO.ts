@@ -10,6 +10,8 @@ export type UserProfileDTO = {
   imagesUrls: string[];
   corePersonalValues: string[];
 
+  birthDate: string;
+
   createdAt: string;
   updatedAt: string;
 };
@@ -24,6 +26,8 @@ export function toUserProfileDTO(userProfile: UserProfile): UserProfileDTO {
 
     imagesUrls: userProfile.imagesUrls,
     corePersonalValues: userProfile.corePersonalValues,
+
+    birthDate: userProfile.birthDate.toISOString(),
 
     createdAt: userProfile.createdAt.toISOString(),
     updatedAt: userProfile.updatedAt.toISOString(),

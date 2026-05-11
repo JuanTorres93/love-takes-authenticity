@@ -15,6 +15,8 @@ export const userProfileTestCreateProps: UserProfileCreateProps = {
   imagesUrls: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg'],
   corePersonalValues: allCorePersonalValues.slice(0, 3),
 
+  birthDate: new Date('1990-01-01'),
+
   createdAt: new Date(),
   updatedAt: new Date(),
 };
