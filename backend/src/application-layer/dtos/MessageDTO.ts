@@ -2,16 +2,22 @@ import { Message } from '../../domain/entities/message/Message';
 
 export type MessageDTO = {
   id: string;
-  content: string;
   senderId: string;
+  conversationId: string;
+
+  content: string;
+
   sentAt: string;
 };
 
 export function toMessageDTO(message: Message): MessageDTO {
   return {
     id: message.id,
-    content: message.content,
     senderId: message.senderId,
+    conversationId: message.conversationId,
+
+    content: message.content,
+
     sentAt: message.sentAt.toISOString(),
   };
 }

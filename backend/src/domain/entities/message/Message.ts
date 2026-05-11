@@ -14,6 +14,7 @@ export class Message {
     const entityProps: MessageProps = {
       id: Id.create(props.id),
       senderId: Id.create(props.senderId),
+      conversationId: Id.create(props.conversationId),
 
       content: Text.create(props.content, messageContentTextOptions),
 
@@ -32,6 +33,10 @@ export class Message {
     return this.props.senderId.value;
   }
 
+  get conversationId() {
+    return this.props.conversationId.value;
+  }
+
   get content() {
     return this.props.content.value;
   }
@@ -44,6 +49,7 @@ export class Message {
 export type MessageCreateProps = {
   id: string;
   senderId: string;
+  conversationId: string;
   content: string;
   sentAt: Date;
 };
@@ -51,6 +57,7 @@ export type MessageCreateProps = {
 export type MessageProps = {
   id: Id;
   senderId: Id;
+  conversationId: Id;
   content: Text;
   sentAt: DomainDate;
 };

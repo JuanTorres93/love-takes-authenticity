@@ -29,6 +29,12 @@ describe('Message', () => {
       expect(message.senderId).toBe(messageTestCreateProps.senderId);
     });
 
+    it('should have a conversationId', async () => {
+      expect(message.conversationId).toBeDefined();
+
+      expect(message.conversationId).toBe(messageTestCreateProps.conversationId);
+    });
+
     it('should have a content', async () => {
       expect(message.content).toBeDefined();
 
