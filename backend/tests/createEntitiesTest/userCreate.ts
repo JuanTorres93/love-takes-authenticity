@@ -1,13 +1,19 @@
-import { User } from '../../src/domain/entities/user/User';
+import { User, UserCreateProps } from '../../src/domain/entities/user/User';
+
+export const testUserId = 'user-id';
 
 export const userTestCreateProps = {
-  id: 'user-id',
+  id: testUserId,
   email: 'test.user@example.com',
   hashedPassword: 'hashed-password',
   createdAt: new Date(),
   updatedAt: new Date(),
 };
 
-export function createTestUser() {
-  return User.create(userTestCreateProps);
+export function createTestUser({
+  overrideProps,
+}: { overrideProps?: Partial<UserCreateProps> } = {}) {
+  const props = { ...userTestCreateProps, ...overrideProps };
+
+  return User.create(props);
 }
