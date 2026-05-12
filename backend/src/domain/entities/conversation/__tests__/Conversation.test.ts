@@ -70,6 +70,12 @@ describe('Conversation', () => {
 
       expect(messages[0].content).toBe('Newest message');
     });
+
+    it('should convert to create props', async () => {
+      const createProps = conversation.toCreateProps();
+
+      expect(createProps).toEqual(conversationTestCreateProps);
+    });
   });
 
   describe('Getters', () => {

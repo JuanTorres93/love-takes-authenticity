@@ -34,6 +34,16 @@ export class User {
     return new User(entityProps);
   }
 
+  toCreateProps(): UserCreateProps {
+    return {
+      id: this.id,
+      email: this.email,
+      hashedPassword: this.hashedPassword,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
   // Getters
   get id() {
     return this.props.id.value;

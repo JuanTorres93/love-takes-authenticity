@@ -17,6 +17,12 @@ describe('UserProfile', () => {
     expect(userProfile).toBeInstanceOf(UserProfile);
   });
 
+  it('should convert to create props', async () => {
+    const createProps = userProfile.toCreateProps();
+
+    expect(createProps).toEqual(validUserProfileProps);
+  });
+
   describe('Properties', () => {
     it('should have a valid id', async () => {
       expect(userProfile.id).not.toBe(undefined);
