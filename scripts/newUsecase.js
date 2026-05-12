@@ -36,7 +36,7 @@ const testDir = path.join(usecaseDir, '__tests__');
 
 // ---- Templates ----
 
-const USECASE_TEMPLATE = `import { NotFoundApplicationError } from '../../../common/applicationErrors';
+const USECASE_TEMPLATE = `import { NotFoundApplicationError } from '../../common/applicationErrors';
 
 export type PLACEHOLDERUsecaseRequest = {
   xxxxId: string;
@@ -64,6 +64,8 @@ export class PLACEHOLDERUsecase {
 
 const TEST_TEMPLATE = `import { NotFoundApplicationError } from '../../../../common/applicationErrors';
 import { PLACEHOLDERUsecase } from '../PLACEHOLDERUsecase';
+
+import { createTestXxxx } from '../../../../../tests/createEntitiesTest/xxxxCreate';
 
 describe('PLACEHOLDERUsecase', () => {
   let xxxxRepo: MemoryXxxxRepo;
