@@ -14,15 +14,15 @@ export const conversationTestCreateProps: ConversationCreateProps = {
   anotherParticipantId,
   messages: [
     createTestMessage({
+      senderId: anotherParticipantId,
+      content: 'Hello from participant 2',
+      sentAt: new Date(),
+    }),
+    createTestMessage({
       senderId: oneParticipantId,
       content: 'Hello from participant 1',
       // Sent 1 second before the other message
       sentAt: new Date(Date.now() - 1000),
-    }),
-    createTestMessage({
-      senderId: anotherParticipantId,
-      content: 'Hello from participant 2',
-      sentAt: new Date(),
     }),
   ],
   createdAt: new Date(),
