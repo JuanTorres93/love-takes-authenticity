@@ -9,11 +9,17 @@ export class MemoryUsersRepo implements UsersRepo {
   }
 
   async getAll() {
-    return Array.from(this.users.values());
+    return [...Array.from(this.users.values())];
   }
 
   async getById(id: string) {
-    return this.users.get(id) || null;
+    const user = this.users.get(id);
+
+    if (!user) {
+      return null;
+    }
+
+    return User.create(user.toCreateProps());
   }
 
   async deleteById(id: string): Promise<void> {
