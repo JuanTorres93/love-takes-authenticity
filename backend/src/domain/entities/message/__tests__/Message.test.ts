@@ -16,6 +16,14 @@ describe('Message', () => {
     expect(message).toBeInstanceOf(Message);
   });
 
+  it('should convert to create props', async () => {
+    const createProps = message.toCreateProps();
+
+    expect(createProps).toEqual({
+      ...messageTestCreateProps,
+    });
+  });
+
   describe('Getters', () => {
     it('should have an id', async () => {
       expect(message.id).toBeDefined();

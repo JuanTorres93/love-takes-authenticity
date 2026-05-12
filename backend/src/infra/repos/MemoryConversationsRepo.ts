@@ -9,17 +9,25 @@ export class MemoryConversationsRepo implements ConversationsRepo {
   }
 
   async getAll() {
-    return Array.from(this.conversations.values());
+    return [...Array.from(this.conversations.values())];
   }
 
   async getById(id: string) {
-    return this.conversations.get(id) || null;
+    const conversation = this.conversations.get(id);
+
+    if (!conversation) {
+      return null;
+    }
+
+    return Conversation.create(conversation.toCreateProps());
   }
 
   async getByParticipantId(participantId: string) {
-    return Array.from(this.conversations.values()).filter((conversation) =>
-      conversation.participantIds.includes(participantId),
-    );
+    return [
+      ...Array.from(this.conversations.values()).filter((conversation) =>
+        conversation.participantIds.includes(participantId),
+      ),
+    ];
   }
 
   async deleteById(id: string): Promise<void> {

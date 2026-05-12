@@ -9,11 +9,17 @@ export class MemoryUserProfilesRepo implements UserProfilesRepo {
   }
 
   async getAll() {
-    return Array.from(this.userProfiles.values());
+    return [...Array.from(this.userProfiles.values())];
   }
 
   async getByUserId(userId: string) {
-    return this.userProfiles.get(userId) || null;
+    const userProfile = this.userProfiles.get(userId);
+
+    if (!userProfile) {
+      return null;
+    }
+
+    return UserProfile.create(userProfile.toCreateProps());
   }
 
   async deleteByUserId(userId: string): Promise<void> {

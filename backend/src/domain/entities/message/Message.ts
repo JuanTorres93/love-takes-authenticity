@@ -24,6 +24,16 @@ export class Message {
     return new Message(entityProps);
   }
 
+  toCreateProps(): MessageCreateProps {
+    return {
+      id: this.id,
+      senderId: this.senderId,
+      conversationId: this.conversationId,
+      content: this.content,
+      sentAt: this.sentAt,
+    };
+  }
+
   // Getters
   get id() {
     return this.props.id.value;

@@ -42,6 +42,12 @@ describe('User', () => {
     expect(userWithoutUpdatedAt.updatedAt.getTime()).toBeLessThanOrEqual(Date.now());
   });
 
+  it('should convert to create props', async () => {
+    const createProps = user.toCreateProps();
+
+    expect(createProps).toEqual(validUserProps);
+  });
+
   describe('Getters', () => {
     it('should return the correct id', () => {
       expect(user.id).toBe(validUserProps.id);

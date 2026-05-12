@@ -66,6 +66,17 @@ export class Conversation {
     }
   }
 
+  toCreateProps(): ConversationCreateProps {
+    return {
+      id: this.id,
+      oneParticipantId: this.props.oneParticipantId.value,
+      anotherParticipantId: this.props.anotherParticipantId.value,
+      messages: this.messages,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
   // Getters
   get id() {
     return this.props.id.value;

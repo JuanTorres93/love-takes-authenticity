@@ -36,7 +36,7 @@ const testDir = path.join(usecaseDir, '__tests__');
 
 // ---- Templates ----
 
-const USECASE_TEMPLATE = `import { NotFoundApplicationError } from '../../../common/applicationErrors';
+const USECASE_TEMPLATE = `import { NotFoundApplicationError } from '../../common/applicationErrors';
 
 export type PLACEHOLDERUsecaseRequest = {
   xxxxId: string;
@@ -63,12 +63,16 @@ export class PLACEHOLDERUsecase {
 `;
 
 const TEST_TEMPLATE = `import { NotFoundApplicationError } from '../../../../common/applicationErrors';
-import { PLACEHOLDERUsecase } from '../PLACEHOLDERUsecase';
+import { PLACEHOLDERUsecase, PLACEHOLDERUsecaseRequest } from '../PLACEHOLDERUsecase';
+
+import { createTestXxxx } from '../../../../../tests/createEntitiesTest/xxxxCreate';
 
 describe('PLACEHOLDERUsecase', () => {
   let xxxxRepo: MemoryXxxxRepo;
   let usecase: PLACEHOLDERUsecase;
   let xxxx: Xxxx; // TODO: initialize with a valid Xxxx entity
+
+  let validRequest: PLACEHOLDERUsecaseRequest;
 
   beforeEach(async () => {
     xxxxRepo = new MemoryXxxxRepo();
@@ -77,13 +81,15 @@ describe('PLACEHOLDERUsecase', () => {
     // TODO: create xxxx and save it
     xxxx = createTestXxxx();
     await xxxxRepo.saveXxxx(xxxx);
+
+    validRequest = {
+      // TODO
+    };
   });
 
   describe('Execution', () => {
     it('should return XxxxDTO', async () => {
-      const result = await usecase.execute({
-        xxxxId: xxxx.id,
-      });
+      const result = await usecase.execute(validRequest);
 
       expect(result).not.toBeInstanceOf(Xxxx);
       for (const prop of xxxxDTOProperties) {

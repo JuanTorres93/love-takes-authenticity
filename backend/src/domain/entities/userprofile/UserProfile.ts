@@ -35,6 +35,20 @@ export class UserProfile {
     return new UserProfile(entityProps);
   }
 
+  toCreateProps(): UserProfileCreateProps {
+    return {
+      id: this.id,
+      userId: this.userId,
+      name: this.name,
+      bio: this.bio,
+      imagesUrls: this.imagesUrls,
+      corePersonalValues: this.corePersonalValues,
+      birthDate: this.birthDate,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
   // Getters
   get id() {
     return this.props.id.value;
