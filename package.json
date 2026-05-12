@@ -13,7 +13,10 @@
     "test": "npm run test -w backend",
     "test:watch": "npm run test:watch -w backend",
     "prepare": "husky",
-    "new-entity": "node scripts/newEntity.js"
+    "new-entity": "node scripts/newEntity.js",
+    "new-usecase:backend": "node scripts/newUsecase.js backend",
+    "new-usecase:frontend-web": "node scripts/newUsecase.js frontend-web",
+    "new-usecase:frontend-mobile": "node scripts/newUsecase.js frontend-mobile"
   },
   "repository": {
     "type": "git",
