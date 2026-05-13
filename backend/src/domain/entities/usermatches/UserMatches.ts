@@ -115,6 +115,21 @@ export class UserMatches {
     this.updateTimestamp();
   }
 
+  toCreateProps(): UserMatchesCreateProps {
+    return {
+      id: this.id,
+
+      userId: this.userId,
+
+      currentlyMatchedUserIds: this.currentlyMatchedUserIds,
+      unmatchedUserIds: this.unmatchedUserIds,
+      blockedUserIds: this.blockedUserIds,
+
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
   // Getters
   get id() {
     return this.props.id.value;

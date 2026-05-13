@@ -21,6 +21,12 @@ describe('UserMatches', () => {
     expect(userMatches).toBeInstanceOf(UserMatches);
   });
 
+  it('should convert to create props', async () => {
+    const createProps = userMatches.toCreateProps();
+
+    expect(createProps).toEqual(validUserMatchesProps);
+  });
+
   describe('behaviour', () => {
     describe('match', () => {
       it('should add a match', async () => {
