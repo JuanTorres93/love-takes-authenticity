@@ -197,6 +197,8 @@ const REPLACEMENTS = [
   [/\btoEntityDTO\b/g, `to${entityRaw}DTO`],
   [/\bentityDTOProperties\b/g, `${entityCamel}DTOProperties`],
   [/\bentityDtoProperties\b/g, `${entityCamel}DtoProperties`],
+  [/\bsampleEntity\b/g, `sample${entityRaw}`],
+  [/\ballEntityGetters\b/g, `all${entityRaw}Getters`],
   [/\bEntity\b/g, entityRaw],
   [/\bentity\b/g, entityCamel],
   [/entityname/g, dirName],
