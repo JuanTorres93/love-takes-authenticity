@@ -29,6 +29,7 @@ export class UnmatchUsersUsecase {
     oneUserMatches.unmatch(request.anotherUserId);
     anotherUserMatches.unmatch(request.oneUserId);
 
+    // TODO IMPORTANT: Create a test file to test transactions when a database connection is implemented.
     await this.transactionContext.run(async () => {
       await Promise.all([
         this.userMatchesRepo.save(oneUserMatches),

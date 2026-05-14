@@ -41,12 +41,9 @@ describe('UnmatchUsersUsecase', () => {
       anotherUserId: anotherUserMatches.userId,
     };
 
-    // Sanity check to ensure the users are matched before executing the usecase
-    const fetchedOneUserMatches = await userMatchesRepo.getByUserId(validRequest.oneUserId);
-    const fetchedAnotherUserMatches = await userMatchesRepo.getByUserId(validRequest.anotherUserId);
-
-    expect(fetchedOneUserMatches!.currentlyMatchedUserIds).toContain(validRequest.anotherUserId);
-    expect(fetchedAnotherUserMatches!.currentlyMatchedUserIds).toContain(validRequest.oneUserId);
+    // Ensure the users are matched before executing the usecase
+    expect(userMatches.currentlyMatchedUserIds).toContain(validRequest.anotherUserId);
+    expect(anotherUserMatches.currentlyMatchedUserIds).toContain(validRequest.oneUserId);
   });
 
   describe('Execution', () => {

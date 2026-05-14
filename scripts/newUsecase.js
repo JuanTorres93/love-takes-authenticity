@@ -48,14 +48,6 @@ export class PLACEHOLDERUsecase {
   async execute(
     request: PLACEHOLDERUsecaseRequest,
   ): Promise<XxxxDTO> {
-    const xxxx = await this.xxxxRepo.getXxxxById(request.xxxxId);
-    if (!xxxx) {
-      throw new NotFoundApplicationError(
-        \`PLACEHOLDERUsecase: Xxxx with id \${request.xxxxId} not found\`,
-      );
-    }
-
-    // TODO IMPORTANT: Finish writing the usecase
 
     return toXxxxDTO(xxxx);
   }
@@ -97,6 +89,9 @@ describe('PLACEHOLDERUsecase', () => {
       }
     });
   });
+
+  // describe('Side effects', () => {
+  // });
 
   // describe('Errors', () => {
   // });
