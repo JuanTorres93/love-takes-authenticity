@@ -1,21 +1,22 @@
+import { createTestUserMatches } from '../../../../tests/createEntitiesTest/userMatchesCreate';
 import { UserMatchesRepo } from '../../../domain/repos/UserMatchesRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
 import { toUserMatchesDTO } from '../../dtos/UserMatchesDTO';
 import { TransactionContext } from '../../services/TransactionContext.port';
 import { ObjectWithUserMatches } from '../common/types';
 
-export type MatchUsersUsecaseRequest = {
+export type UnmatchUsersUsecaseRequest = {
   oneUserId: string;
   anotherUserId: string;
 };
 
-export class MatchUsersUsecase {
+export class UnmatchUsersUsecase {
   constructor(
     private userMatchesRepo: UserMatchesRepo,
     private transactionContext: TransactionContext,
   ) {}
 
-  async execute(request: MatchUsersUsecaseRequest): Promise<ObjectWithUserMatches> {
+  async execute(request: UnmatchUsersUsecaseRequest): Promise<ObjectWithUserMatches> {
     const [oneUserMatches, anotherUserMatches] = await Promise.all([
       this.userMatchesRepo.getByUserId(request.oneUserId),
 
@@ -23,19 +24,11 @@ export class MatchUsersUsecase {
     ]);
 
     if (!oneUserMatches || !anotherUserMatches)
-      throw new NotFoundApplicationError(
-        `UserMatches for userId ${oneUserMatches} and/or ${anotherUserMatches} not found`,
-      );
+      throw new NotFoundApplicationError('UserMatches not found');
 
-    oneUserMatches.match(request.anotherUserId);
-    anotherUserMatches.match(request.oneUserId);
+    oneUserMatches.unmatch(request.anotherUserId);
+    anotherUserMatches.unmatch(request.oneUserId);
 
-    const returnObject: ObjectWithUserMatches = {
-      [oneUserMatches.userId]: toUserMatchesDTO(oneUserMatches),
-      [anotherUserMatches.userId]: toUserMatchesDTO(anotherUserMatches),
-    };
-
-    // TODO IMPORTANT: Create a test file to test transactions when a database connection is implemented.
     await this.transactionContext.run(async () => {
       await Promise.all([
         this.userMatchesRepo.save(oneUserMatches),
@@ -43,6 +36,11 @@ export class MatchUsersUsecase {
         this.userMatchesRepo.save(anotherUserMatches),
       ]);
     });
+
+    const returnObject: ObjectWithUserMatches = {
+      [request.oneUserId]: toUserMatchesDTO(oneUserMatches),
+      [request.anotherUserId]: toUserMatchesDTO(anotherUserMatches),
+    };
 
     return returnObject;
   }
