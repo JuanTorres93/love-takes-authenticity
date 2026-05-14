@@ -2,7 +2,7 @@ import { createTestUserProfile } from '../../../../../tests/createEntitiesTest/u
 import { userProfileDTOProperties } from '../../../../../tests/dtoProperties/userProfileDtoProperties';
 import { UserProfile } from '../../../../domain/entities/userprofile/UserProfile';
 import { allCorePersonalValues } from '../../../../domain/value-objects/CorePersonalValue/ValidCorePersonalValues';
-import { MemoryUserProfilesRepo } from '../../../../infra/repos/MemoryUserProfilesRepo';
+import { MemoryUserProfilesRepo } from '../../../../infra/repos/Memory/MemoryUserProfilesRepo';
 import { TwoValuesSharedDummyMatchAlgorithm } from '../../../../infra/services/MatchAlgorithm/TwoValuesSharedDummyMatchAlgorithm/TwoValuesSharedDummyMatchAlgorithm';
 import { NotFoundApplicationError } from '../../../common/applicationErrors';
 import { FindMatchesUsecase, FindMatchesUsecaseRequest } from '../FindMatchesUsecase';

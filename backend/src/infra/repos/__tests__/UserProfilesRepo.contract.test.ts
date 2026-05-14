@@ -1,6 +1,6 @@
 import { createTestUserProfile } from '../../../../tests/createEntitiesTest/userProfileCreate';
-import { MemoryUserProfilesRepo } from '../../../infra/repos/MemoryUserProfilesRepo';
 import { UserProfile } from '../../entities/userprofile/UserProfile';
+import { MemoryUserProfilesRepo } from '../Memory/MemoryUserProfilesRepo';
 
 const repos = [
   { name: 'MemoryUserProfilesRepo', repoClass: MemoryUserProfilesRepo },

@@ -1,5 +1,5 @@
-import { UserMatches } from '../../domain/entities/usermatches/UserMatches';
-import { UserMatchesRepo } from '../../domain/repos/UserMatchesRepo.port';
+import { UserMatches } from '../../../domain/entities/usermatches/UserMatches';
+import { UserMatchesRepo } from '../../../domain/repos/UserMatchesRepo.port';
 
 export class MemoryUserMatchesRepo implements UserMatchesRepo {
   private userMatches: Map<string, UserMatches> = new Map();

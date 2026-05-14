@@ -1,5 +1,5 @@
-import { User } from '../../domain/entities/user/User';
-import { UsersRepo } from '../../domain/repos/UsersRepo.port';
+import { User } from '../../../domain/entities/user/User';
+import { UsersRepo } from '../../../domain/repos/UsersRepo.port';
 
 export class MemoryUsersRepo implements UsersRepo {
   private users: Map<string, User> = new Map();

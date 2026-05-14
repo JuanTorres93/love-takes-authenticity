@@ -3,8 +3,8 @@ import {
   createTestConversation,
   oneParticipantId,
 } from '../../../../tests/createEntitiesTest/conversationCreate';
-import { MemoryConversationsRepo } from '../../../infra/repos/MemoryConversationsRepo';
 import { Conversation } from '../../entities/conversation/Conversation';
+import { MemoryConversationsRepo } from '../Memory/MemoryConversationsRepo';
 
 const repos = [
   { name: 'MemoryConversationsRepo', repoClass: MemoryConversationsRepo },
@@ -103,6 +103,23 @@ repos.forEach(({ name, repoClass }) => {
         const conversations = await repo.getByParticipantId(anotherParticipantId);
 
         expect(conversations).toContain(conversation);
+      });
+    });
+
+    describe('existsBetweenParticipants', () => {
+      it('should return true if a conversation exists between the given participant ids', async () => {
+        const exists = await repo.existsBetweenParticipants(oneParticipantId, anotherParticipantId);
+
+        expect(exists).toBe(true);
+      });
+
+      it('should return false if no conversation exists between the given participant ids', async () => {
+        const exists = await repo.existsBetweenParticipants(
+          oneParticipantId,
+          'non-existent-participant-id',
+        );
+
+        expect(exists).toBe(false);
       });
     });
 

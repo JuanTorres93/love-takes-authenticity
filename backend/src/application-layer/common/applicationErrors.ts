@@ -5,3 +5,5 @@ export function isApplicationError(err: Error) {
 }
 
 export class NotFoundApplicationError extends ApplicationError {}
+
+export class AlreadyExistsApplicationError extends ApplicationError {}

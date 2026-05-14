@@ -2,7 +2,7 @@ import { createTestConversation } from '../../../../../tests/createEntitiesTest/
 import { messageDTOProperties } from '../../../../../tests/dtoProperties/messageDtoProperties';
 import { Conversation } from '../../../../domain/entities/conversation/Conversation';
 import { Message } from '../../../../domain/entities/message/Message';
-import { MemoryConversationsRepo } from '../../../../infra/repos/MemoryConversationsRepo';
+import { MemoryConversationsRepo } from '../../../../infra/repos/Memory/MemoryConversationsRepo';
 import { CryptoUUIDIdGenerator } from '../../../../infra/services/CryptoUUIDIdGenerator/CryptoUUIDIdGenerator';
 import { NotFoundApplicationError } from '../../../common/applicationErrors';
 import { SendMessageUsecase, SendMessageUsecaseRequest } from '../SendMessageUsecase';

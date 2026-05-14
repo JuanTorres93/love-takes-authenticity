@@ -1,5 +1,5 @@
-import { Conversation } from '../../domain/entities/conversation/Conversation';
-import { ConversationsRepo } from '../../domain/repos/ConversationsRepo.port';
+import { Conversation } from '../../../domain/entities/conversation/Conversation';
+import { ConversationsRepo } from '../../../domain/repos/ConversationsRepo.port';
 
 export class MemoryConversationsRepo implements ConversationsRepo {
   private conversations: Map<string, Conversation> = new Map();
@@ -28,6 +28,17 @@ export class MemoryConversationsRepo implements ConversationsRepo {
         conversation.participantIds.includes(participantId),
       ),
     ];
+  }
+
+  async existsBetweenParticipants(
+    participantId: string,
+    otherParticipantId: string,
+  ): Promise<boolean> {
+    return [...Array.from(this.conversations.values())].some((conversation) => {
+      const participantIds = conversation.participantIds;
+
+      return participantIds.includes(participantId) && participantIds.includes(otherParticipantId);
+    });
   }
 
   async deleteById(id: string): Promise<void> {
