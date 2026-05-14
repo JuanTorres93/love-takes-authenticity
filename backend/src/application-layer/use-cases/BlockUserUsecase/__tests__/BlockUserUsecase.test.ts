@@ -1,7 +1,7 @@
 import { createTestUserMatches } from '../../../../../tests/createEntitiesTest/userMatchesCreate';
 import { userMatchesDTOProperties } from '../../../../../tests/dtoProperties/userMatchesDtoProperties';
 import { UserMatches } from '../../../../domain/entities/usermatches/UserMatches';
-import { MemoryUserMatchesRepo } from '../../../../infra/repos/MemoryUserMatchesRepo';
+import { MemoryUserMatchesRepo } from '../../../../infra/repos/Memory/MemoryUserMatchesRepo';
 import { NotFoundApplicationError } from '../../../common/applicationErrors';
 import { BlockUserUsecase, BlockUserUsecaseRequest } from '../BlockUserUsecase';
 

@@ -1,5 +1,5 @@
-import { UserProfile } from '../../domain/entities/userprofile/UserProfile';
-import { UserProfilesRepo } from '../../domain/repos/UserProfilesRepo.port';
+import { UserProfile } from '../../../domain/entities/userprofile/UserProfile';
+import { UserProfilesRepo } from '../../../domain/repos/UserProfilesRepo.port';
 
 export class MemoryUserProfilesRepo implements UserProfilesRepo {
   private userProfiles: Map<string, UserProfile> = new Map();

@@ -2,8 +2,8 @@ import {
   createTestUserMatches,
   userMatchesTestCreateProps,
 } from '../../../../tests/createEntitiesTest/userMatchesCreate';
-import { MemoryUserMatchesRepo } from '../../../infra/repos/MemoryUserMatchesRepo';
 import { UserMatches } from '../../entities/usermatches/UserMatches';
+import { MemoryUserMatchesRepo } from '../Memory/MemoryUserMatchesRepo';
 
 const repos = [
   { name: 'MemoryUserMatchesRepo', repoClass: MemoryUserMatchesRepo },

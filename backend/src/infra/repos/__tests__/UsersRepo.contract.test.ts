@@ -1,6 +1,6 @@
 import { createTestUser } from '../../../../tests/createEntitiesTest/userCreate';
-import { MemoryUsersRepo } from '../../../infra/repos/MemoryUsersRepo';
 import { User } from '../../entities/user/User';
+import { MemoryUsersRepo } from '../Memory/MemoryUsersRepo';
 
 const repos = [
   { name: 'MemoryUsersRepo', repoClass: MemoryUsersRepo },

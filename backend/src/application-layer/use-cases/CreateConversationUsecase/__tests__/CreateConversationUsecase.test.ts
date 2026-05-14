@@ -6,8 +6,8 @@ import { createTestUser } from '../../../../../tests/createEntitiesTest/userCrea
 import { conversationDTOProperties } from '../../../../../tests/dtoProperties/conversationDtoProperties';
 import { Conversation } from '../../../../domain/entities/conversation/Conversation';
 import { User } from '../../../../domain/entities/user/User';
-import { MemoryConversationsRepo } from '../../../../infra/repos/MemoryConversationsRepo';
-import { MemoryUsersRepo } from '../../../../infra/repos/MemoryUsersRepo';
+import { MemoryConversationsRepo } from '../../../../infra/repos/Memory/MemoryConversationsRepo';
+import { MemoryUsersRepo } from '../../../../infra/repos/Memory/MemoryUsersRepo';
 import { CryptoUUIDIdGenerator } from '../../../../infra/services/CryptoUUIDIdGenerator/CryptoUUIDIdGenerator';
 import { NotFoundApplicationError } from '../../../common/applicationErrors';
 import {

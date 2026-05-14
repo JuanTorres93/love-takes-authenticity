@@ -3,8 +3,8 @@ import {
   createTestConversation,
   oneParticipantId,
 } from '../../../../tests/createEntitiesTest/conversationCreate';
-import { MemoryConversationsRepo } from '../../../infra/repos/MemoryConversationsRepo';
 import { Conversation } from '../../entities/conversation/Conversation';
+import { MemoryConversationsRepo } from '../Memory/MemoryConversationsRepo';
 
 const repos = [
   { name: 'MemoryConversationsRepo', repoClass: MemoryConversationsRepo },

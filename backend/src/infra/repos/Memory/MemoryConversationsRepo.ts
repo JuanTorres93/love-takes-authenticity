@@ -1,5 +1,5 @@
-import { Conversation } from '../../domain/entities/conversation/Conversation';
-import { ConversationsRepo } from '../../domain/repos/ConversationsRepo.port';
+import { Conversation } from '../../../domain/entities/conversation/Conversation';
+import { ConversationsRepo } from '../../../domain/repos/ConversationsRepo.port';
 
 export class MemoryConversationsRepo implements ConversationsRepo {
   private conversations: Map<string, Conversation> = new Map();
