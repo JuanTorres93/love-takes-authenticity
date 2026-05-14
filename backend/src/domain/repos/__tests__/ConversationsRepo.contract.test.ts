@@ -106,6 +106,23 @@ repos.forEach(({ name, repoClass }) => {
       });
     });
 
+    describe('existsBetweenParticipants', () => {
+      it('should return true if a conversation exists between the given participant ids', async () => {
+        const exists = await repo.existsBetweenParticipants(oneParticipantId, anotherParticipantId);
+
+        expect(exists).toBe(true);
+      });
+
+      it('should return false if no conversation exists between the given participant ids', async () => {
+        const exists = await repo.existsBetweenParticipants(
+          oneParticipantId,
+          'non-existent-participant-id',
+        );
+
+        expect(exists).toBe(false);
+      });
+    });
+
     describe('deleteById', () => {
       it('should delete a conversation by id', async () => {
         await repo.deleteById(conversation.id);

@@ -30,6 +30,17 @@ export class MemoryConversationsRepo implements ConversationsRepo {
     ];
   }
 
+  async existsBetweenParticipants(
+    participantId: string,
+    otherParticipantId: string,
+  ): Promise<boolean> {
+    return [...Array.from(this.conversations.values())].some((conversation) => {
+      const participantIds = conversation.participantIds;
+
+      return participantIds.includes(participantId) && participantIds.includes(otherParticipantId);
+    });
+  }
+
   async deleteById(id: string): Promise<void> {
     this.conversations.delete(id);
   }
