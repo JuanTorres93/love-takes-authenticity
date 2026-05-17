@@ -10,6 +10,7 @@
     "frontend-mobile"
   ],
   "scripts": {
+    "install-app": "npm install --workspaces=false && npm install -w backend && npm install -w frontend-web && npm install -w frontend-mobile",
     "test": "npm run test -w backend",
     "test:watch": "npm run test:watch -w backend",
     "prepare": "husky",
