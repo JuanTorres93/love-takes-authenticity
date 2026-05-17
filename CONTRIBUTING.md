@@ -1,6 +1,6 @@
 # Contributing to Love Takes Authenticity
 
-Thanks for contributing. This project follows Clean Architecture + TDD. Keep things simple, tested, and inside the correct layer.
+Thanks for contributing. This project follows Clean Architecture + TDD and Stories for features. Keep things simple, tested, and inside the correct layer.
 
 ## 🧠 Core rules
 
@@ -46,39 +46,15 @@ infrastructure → interface-adapters → application → domain
 - Prefer domain types over primitives
 - Use prettier
 
-## 🏗️ Scaffolding a new entity
+## 🏗️ Adding new features
 
-Use the included script to generate the boilerplate for a new domain entity:
+1. Check if existing entities, services and/or use cases cover the logic needed for the feature (just looking the folder name should be enough).
+1. If possible, create use cases and orchestrate the already existing entities and services.
+1. If needed create new entities with their repos.
 
-```bash
-npm run new-entity EntityName
-# Example:
-npm run new-entity Message
-```
-
-This creates six files:
-
-```
-backend/src/domain/entities/entityname/
-  EntityName.ts                         # Entity class with typed props and getters
-  __tests__/
-    EntityName.test.ts                  # Vitest test file with a basic describe block
-
-backend/src/application-layer/dtos/
-  EntityNameDTO.ts                      # DTO type and toEntityNameDTO mapper function
-  __tests__/
-    EntityNameDTO.test.ts               # Vitest test file for the DTO
-
-backend/tests/createEntitiesTest/
-  entityNameCreate.ts                   # Test props and createTestEntityName() factory
-
-backend/tests/dtoProperties/
-  entityNameDtoProperties.ts            # DTO property list derived from entity getters
-```
-
-All files use `Entity` as a placeholder that is replaced with your entity name. They include `TODO` comments to guide implementation — replace primitive types with Value Objects, add validation, and fill in your props.
+Use the included scripts (package.json) to generate the boilerplate for a new domain entity or use case. They will scaffold every file needed and their tests.
 
 ## 🔁 Pull Requests
 
-- Must pass tests
+- Must pass all tests
 - Must include tests for new logic
