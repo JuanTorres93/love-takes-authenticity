@@ -16,7 +16,11 @@
     "new-entity": "node scripts/newEntity.js",
     "new-usecase:backend": "node scripts/newUsecase.js backend",
     "new-usecase:frontend-web": "node scripts/newUsecase.js frontend-web",
-    "new-usecase:frontend-mobile": "node scripts/newUsecase.js frontend-mobile"
+    "new-usecase:frontend-mobile": "node scripts/newUsecase.js frontend-mobile",
+    "dev:web": "npm run dev -w frontend-web",
+    "build:web": "npm run build -w frontend-web",
+    "start:web": "npm run start -w frontend-web",
+    "lint:web": "npm run lint -w frontend-web"
   },
   "repository": {
     "type": "git",
