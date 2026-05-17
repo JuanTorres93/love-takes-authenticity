@@ -21,4 +21,5 @@ As a ROLE, in order to FEATURE, I will DO SOMETHING
 ## Acceptance Criteria
 
 - [ ] ...
-- [ ] ...
+- [ ] All tests passes
+- [ ] Tests for new funtionality are added
