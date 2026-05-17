@@ -10,7 +10,6 @@
     "frontend-mobile"
   ],
   "scripts": {
-    "install-app": "npm install && npm install -w backend && npm install -w frontend-web && npm install -w frontend-mobile",
     "test": "npm run test -w backend",
     "test:watch": "npm run test:watch -w backend",
     "prepare": "husky",
@@ -18,6 +17,9 @@
     "new-usecase:backend": "node scripts/newUsecase.js backend",
     "new-usecase:frontend-web": "node scripts/newUsecase.js frontend-web",
     "new-usecase:frontend-mobile": "node scripts/newUsecase.js frontend-mobile",
+    "dev:backend": "npm run dev -w backend",
+    "build:backend": "npm run build -w backend",
+    "start:backend": "npm run start -w backend",
     "dev:web": "npm run dev -w frontend-web",
     "build:web": "npm run build -w frontend-web",
     "start:web": "npm run start -w frontend-web",
