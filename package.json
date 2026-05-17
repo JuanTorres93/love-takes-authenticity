@@ -10,6 +10,7 @@
     "frontend-mobile"
   ],
   "scripts": {
+    "install-app": "npm install && npm install -w backend && npm install -w frontend-web && npm install -w frontend-mobile",
     "test": "npm run test -w backend",
     "test:watch": "npm run test:watch -w backend",
     "prepare": "husky",
@@ -20,7 +21,11 @@
     "dev:web": "npm run dev -w frontend-web",
     "build:web": "npm run build -w frontend-web",
     "start:web": "npm run start -w frontend-web",
-    "lint:web": "npm run lint -w frontend-web"
+    "lint:web": "npm run lint -w frontend-web",
+    "start:mobile": "npm run start -w frontend-mobile",
+    "android:mobile": "npm run android -w frontend-mobile",
+    "ios:mobile": "npm run ios -w frontend-mobile",
+    "lint:mobile": "npm run lint -w frontend-mobile"
   },
   "repository": {
     "type": "git",
