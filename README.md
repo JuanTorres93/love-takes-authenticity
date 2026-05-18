@@ -50,7 +50,7 @@ The project is a monorepo with three workspaces:
 
 ```bash
 # Install dependencies
-npm install
+npm run install-app
 
 # Run backend tests
 npm test
