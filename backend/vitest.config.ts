@@ -6,5 +6,6 @@ export default defineConfig({
   test: {
     globals: true, // use describe/it/expect without import
     include: ['src/**/__tests__/**/*.{spec,test}.{ts,tsx}', 'tests/**/*.{spec,test}.{ts,tsx}'],
+    setupFiles: ['tests/setup.ts'], // setup file to run before tests
   },
 });
