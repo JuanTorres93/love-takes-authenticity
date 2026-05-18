@@ -1,4 +1,3 @@
-import { createTestUserMatches } from '../../../../tests/createEntitiesTest/userMatchesCreate';
 import { UserMatchesRepo } from '../../../domain/repos/UserMatchesRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
 import { toUserMatchesDTO } from '../../dtos/UserMatchesDTO';
