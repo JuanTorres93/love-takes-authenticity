@@ -6,8 +6,8 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "npm run test -- --watch",
-    "dev": "NODE_ENV=development nodemon --exec tsx src/infra/express/server.ts",
-    "build": "esbuild src/infra/express/server.ts --bundle --platform=node --format=esm --outfile=dist/server.js --external:mongoose --external:dotenv --external:express --external:cors --external:morgan",
+    "dev": "NODE_ENV=development nodemon --exec tsx src/infra/server.ts",
+    "build": "esbuild src/infra/server.ts --bundle --platform=node --format=esm --outfile=dist/server.js --packages=external",
     "start": "NODE_ENV=production node dist/server.js"
   },
   "keywords": [],
@@ -24,11 +24,13 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/morgan": "^1.9.10",
+    "@types/socket.io": "^3.0.1",
     "@types/supertest": "^7.2.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "morgan": "^1.10.1",
+    "socket.io": "^4.8.3",
     "supertest": "^7.2.2"
   }
 }
