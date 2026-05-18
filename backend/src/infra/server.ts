@@ -9,8 +9,7 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 
 const httpServer = createServer(expressApp);
-
-export const io = createSocketIoApp(httpServer);
+createSocketIoApp(httpServer);
 
 httpServer.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

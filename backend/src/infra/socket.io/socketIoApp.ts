@@ -6,6 +6,7 @@ type HttpServer = ReturnType<typeof createServer>;
 export function createSocketIoApp(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: { origin: '*' },
+    connectionStateRecovery: {},
   });
 
   io.on('connection', (socket) => {
