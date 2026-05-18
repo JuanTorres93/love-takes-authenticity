@@ -11,8 +11,10 @@
   ],
   "scripts": {
     "install-app": "npm install --workspaces=false && npm install -w backend && npm install -w frontend-web && npm install -w frontend-mobile",
-    "test": "npm run test -w backend",
-    "test:watch": "npm run test:watch -w backend",
+    "test": "npm run test --workspaces",
+    "test:backend:watch": "npm run test:watch -w backend",
+    "test:web:watch": "npm run test:watch -w frontend-web",
+    "test:mobile:watch": "npm run test:watch -w frontend-mobile",
     "prepare": "husky",
     "new-entity": "node scripts/newEntity.js",
     "new-usecase:backend": "node scripts/newUsecase.js backend",
