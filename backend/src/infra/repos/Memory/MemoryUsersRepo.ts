@@ -25,4 +25,8 @@ export class MemoryUsersRepo implements UsersRepo {
   async deleteById(id: string): Promise<void> {
     this.users.delete(id);
   }
+
+  clearAllForTesting() {
+    this.users.clear();
+  }
 }

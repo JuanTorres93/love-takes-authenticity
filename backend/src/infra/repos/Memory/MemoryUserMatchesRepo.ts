@@ -33,4 +33,8 @@ export class MemoryUserMatchesRepo implements UserMatchesRepo {
       this.userMatches.delete(userMatches.id);
     }
   }
+
+  clearAllForTesting() {
+    this.userMatches.clear();
+  }
 }

@@ -44,4 +44,8 @@ export class MemoryConversationsRepo implements ConversationsRepo {
   async deleteById(id: string): Promise<void> {
     this.conversations.delete(id);
   }
+
+  clearAllForTesting() {
+    this.conversations.clear();
+  }
 }
