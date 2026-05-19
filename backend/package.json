@@ -7,7 +7,7 @@
     "test": "vitest run",
     "test:watch": "npm run test -- --watch",
     "dev": "NODE_ENV=development nodemon --exec tsx src/infra/server.ts",
-    "build": "esbuild src/infra/server.ts --bundle --platform=node --format=esm --outfile=dist/server.js --packages=external",
+    "build": "esbuild src/infra/server.ts --bundle --platform=node --format=esm --outfile=dist/server.js",
     "start": "NODE_ENV=production node dist/server.js"
   },
   "keywords": [],
