@@ -14,9 +14,22 @@ export function createSocketIoApp(httpServer: HttpServer) {
 
   io.on('connection', (socket) => {
     socket.on('sendMessage', async (request: SendMessageUsecaseRequest) => {
-      const message = await AppSendMessageUsecase.execute(request);
+      try {
+        const message = await AppSendMessageUsecase.execute(request);
 
-      socket.emit('message', message.content);
+        const response: SocketEmitData<string> = {
+          status: 'success',
+          data: message.content,
+        };
+        socket.emit('message', response);
+      } catch (error) {
+        const response: SocketEmitData<string> = {
+          status: 'error',
+          data: (error as Error).message,
+        };
+
+        socket.emit('message', response);
+      }
     });
 
     socket.on('disconnect', () => {
@@ -26,3 +39,8 @@ export function createSocketIoApp(httpServer: HttpServer) {
 
   return io;
 }
+
+type SocketEmitData<T> = {
+  status: 'success' | 'error';
+  data: T;
+};

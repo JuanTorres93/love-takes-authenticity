@@ -56,17 +56,39 @@ describe('socketIoApp', () => {
 
   it('should send a message to a conversation', async () => {
     // Listen for the message on the client side
-    const messagePromise = new Promise<string>((resolve) => {
-      clientSocket.on('message', (message: string) => {
-        resolve(message);
-      });
-    });
+    const messagePromise = listenToEvent(clientSocket, 'message');
 
     // Emit a message from the client to the server
     clientSocket.emit('sendMessage', validRequest);
 
     // Wait for the message to be received and assert it
-    const receivedMessage = await messagePromise;
-    expect(receivedMessage).toBe(validRequest.content);
+    const response = await messagePromise;
+
+    expect(response.data).toBe(validRequest.content);
+    expect(response.status).toBe('success');
+  });
+
+  describe('Errors', () => {
+    it('should throw error if user does not belong to a conversation', async () => {
+      const invalidRequest = {
+        ...validRequest,
+        senderId: 'nonexistent-user-id',
+      };
+
+      const errorPromise = listenToEvent(clientSocket, 'message');
+
+      clientSocket.emit('sendMessage', invalidRequest);
+
+      const response = await errorPromise;
+      expect(response.status).toBe('error');
+    });
   });
 });
+
+function listenToEvent(socket: Socket, event: string): Promise<any> {
+  return new Promise((resolve) => {
+    socket.on(event, (data) => {
+      resolve(data);
+    });
+  });
+}
