@@ -18,6 +18,8 @@ export function createSocketIoApp(httpServer: HttpServer) {
   });
 
   io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
+
     socket.on(SEND_MESSAGE, async (request: SendMessageUsecaseRequest) => {
       try {
         const sentMessage = await AppSendMessageUsecase.execute(request);
