@@ -7,6 +7,11 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "test": "true"
+    "test": "vitest run",
+    "test:watch": "npm run test -- --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "vitest": "^4.1.5"
   }
 }
