@@ -56,13 +56,13 @@ describe('socketIoApp', () => {
 
   it('should send a message to a conversation', async () => {
     // Listen for the message on the client side
-    const messagePromise = listenToEvent(clientSocket, 'message');
+    const getMessageListenerPromise = listenToEvent(clientSocket, 'getMessage');
 
     // Emit a message from the client to the server
     clientSocket.emit('sendMessage', validRequest);
 
     // Wait for the message to be received and assert it
-    const response = await messagePromise;
+    const response = await getMessageListenerPromise;
 
     expect(response.data).toBe(validRequest.content);
     expect(response.status).toBe('success');
@@ -75,11 +75,12 @@ describe('socketIoApp', () => {
         senderId: 'nonexistent-user-id',
       };
 
-      const errorPromise = listenToEvent(clientSocket, 'message');
+      const getMessageListenerPromise = listenToEvent(clientSocket, 'getMessage');
 
       clientSocket.emit('sendMessage', invalidRequest);
 
-      const response = await errorPromise;
+      const response = await getMessageListenerPromise;
+
       expect(response.status).toBe('error');
     });
   });

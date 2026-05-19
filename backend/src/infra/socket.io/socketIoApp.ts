@@ -3,6 +3,8 @@ import { Server } from 'socket.io';
 
 import { SendMessageUsecaseRequest } from '../../application-layer/use-cases/SendMessageUsecase/SendMessageUsecase';
 import { AppSendMessageUsecase } from '../../interface-adapters/use-cases/AppSendMessageUsecase';
+import { SocketResponseData } from './common/SocketResponseData';
+import { handleSocketIoErrors } from './common/handleSocketIoErrors';
 
 type HttpServer = ReturnType<typeof createServer>;
 
@@ -15,32 +17,19 @@ export function createSocketIoApp(httpServer: HttpServer) {
   io.on('connection', (socket) => {
     socket.on('sendMessage', async (request: SendMessageUsecaseRequest) => {
       try {
-        const message = await AppSendMessageUsecase.execute(request);
+        const sentMessage = await AppSendMessageUsecase.execute(request);
 
-        const response: SocketEmitData<string> = {
+        const response: SocketResponseData<string> = {
           status: 'success',
-          data: message.content,
+          data: sentMessage.content,
         };
-        socket.emit('message', response);
+
+        socket.emit('getMessage', response);
       } catch (error) {
-        const response: SocketEmitData<string> = {
-          status: 'error',
-          data: (error as Error).message,
-        };
-
-        socket.emit('message', response);
+        handleSocketIoErrors(socket, 'getMessage', error as Error);
       }
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Client disconnected:', socket.id);
     });
   });
 
   return io;
 }
-
-type SocketEmitData<T> = {
-  status: 'success' | 'error';
-  data: T;
-};
