@@ -1,4 +1,5 @@
 import { createServer } from 'http';
+import { SOCKET_EVENTS } from 'shared';
 import { Server } from 'socket.io';
 
 import { SendMessageUsecaseRequest } from '../../application-layer/use-cases/SendMessageUsecase/SendMessageUsecase';
@@ -8,6 +9,8 @@ import { handleSocketIoErrors } from './common/handleSocketIoErrors';
 
 type HttpServer = ReturnType<typeof createServer>;
 
+const { SEND_MESSAGE, GET_MESSAGE } = SOCKET_EVENTS;
+
 export function createSocketIoApp(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: { origin: '*' },
@@ -15,7 +18,7 @@ export function createSocketIoApp(httpServer: HttpServer) {
   });
 
   io.on('connection', (socket) => {
-    socket.on('sendMessage', async (request: SendMessageUsecaseRequest) => {
+    socket.on(SEND_MESSAGE, async (request: SendMessageUsecaseRequest) => {
       try {
         const sentMessage = await AppSendMessageUsecase.execute(request);
 
@@ -24,9 +27,9 @@ export function createSocketIoApp(httpServer: HttpServer) {
           data: sentMessage.content,
         };
 
-        socket.emit('getMessage', response);
+        socket.emit(GET_MESSAGE, response);
       } catch (error) {
-        handleSocketIoErrors(socket, 'getMessage', error as Error);
+        handleSocketIoErrors(socket, GET_MESSAGE, error as Error);
       }
     });
   });

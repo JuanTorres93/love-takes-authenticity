@@ -1,5 +1,6 @@
 import { createServer } from 'http';
 import { AddressInfo } from 'net';
+import { SOCKET_EVENTS } from 'shared';
 import { Socket, io as clientIo } from 'socket.io-client';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -10,6 +11,8 @@ import { AppUsersRepo } from '../../../interface-adapters/repos/AppUsersRepo';
 import { createSocketIoApp } from '../socketIoApp';
 
 const ASSIGN_AUTOMATIC_FREE_PORT = 0;
+
+const { SEND_MESSAGE, GET_MESSAGE } = SOCKET_EVENTS;
 
 describe('socketIoApp', () => {
   let assignedPort: number;
@@ -56,10 +59,10 @@ describe('socketIoApp', () => {
 
   it('should send a message to a conversation', async () => {
     // Listen for the message on the client side
-    const getMessageListenerPromise = listenToEvent(clientSocket, 'getMessage');
+    const getMessageListenerPromise = listenToEvent(clientSocket, GET_MESSAGE);
 
     // Emit a message from the client to the server
-    clientSocket.emit('sendMessage', validRequest);
+    clientSocket.emit(SEND_MESSAGE, validRequest);
 
     // Wait for the message to be received and assert it
     const response = await getMessageListenerPromise;
@@ -75,9 +78,9 @@ describe('socketIoApp', () => {
         senderId: 'nonexistent-user-id',
       };
 
-      const getMessageListenerPromise = listenToEvent(clientSocket, 'getMessage');
+      const getMessageListenerPromise = listenToEvent(clientSocket, GET_MESSAGE);
 
-      clientSocket.emit('sendMessage', invalidRequest);
+      clientSocket.emit(SEND_MESSAGE, invalidRequest);
 
       const response = await getMessageListenerPromise;
 
