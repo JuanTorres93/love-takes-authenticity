@@ -1,7 +1,9 @@
+import { UserDTO } from 'shared';
+
 import { createTestUser } from '../../../../tests/createEntitiesTest/userCreate';
 import { userDTOProperties } from '../../../../tests/dtoProperties/userDtoProperties';
 import { User } from '../../../domain/entities/user/User';
-import { UserDTO, toUserDTO } from '../UserDTO';
+import { toUserDTO } from '../UserDTO';
 
 describe('UserDTO', () => {
   let user: User;

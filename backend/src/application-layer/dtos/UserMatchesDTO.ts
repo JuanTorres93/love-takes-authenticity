@@ -1,17 +1,6 @@
+import { UserMatchesDTO } from 'shared';
+
 import { UserMatches } from '../../domain/entities/usermatches/UserMatches';
-
-export type UserMatchesDTO = {
-  id: string;
-
-  userId: string;
-
-  currentlyMatchedUserIds: string[];
-  unmatchedUserIds: string[];
-  blockedUserIds: string[];
-
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 export function toUserMatchesDTO(userMatches: UserMatches): UserMatchesDTO {
   return {

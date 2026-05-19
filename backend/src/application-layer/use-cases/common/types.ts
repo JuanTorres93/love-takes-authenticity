@@ -1,3 +1,3 @@
-import { UserMatchesDTO } from '../../dtos/UserMatchesDTO';
+import { UserMatchesDTO } from 'shared';
 
 export type ObjectWithUserMatches = Record<string, UserMatchesDTO>;

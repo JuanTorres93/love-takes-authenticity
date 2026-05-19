@@ -1,6 +1,8 @@
+import { ConversationDTO } from 'shared';
+
 import { ConversationsRepo } from '../../../domain/repos/ConversationsRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
-import { ConversationDTO, toConversationDTO } from '../../dtos/ConversationDTO';
+import { toConversationDTO } from '../../dtos/ConversationDTO';
 
 export type DeleteConversationUsecaseRequest = {
   conversationId: string;

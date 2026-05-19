@@ -1,14 +1,6 @@
+import { MessageDTO } from 'shared';
+
 import { Message } from '../../domain/entities/message/Message';
-
-export type MessageDTO = {
-  id: string;
-  senderId: string;
-  conversationId: string;
-
-  content: string;
-
-  sentAt: string;
-};
 
 export function toMessageDTO(message: Message): MessageDTO {
   return {

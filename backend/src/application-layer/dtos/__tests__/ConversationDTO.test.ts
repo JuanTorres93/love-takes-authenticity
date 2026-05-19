@@ -1,7 +1,9 @@
+import { ConversationDTO } from 'shared';
+
 import { createTestConversation } from '../../../../tests/createEntitiesTest/conversationCreate';
 import { conversationDTOProperties } from '../../../../tests/dtoProperties/conversationDtoProperties';
 import { Conversation } from '../../../domain/entities/conversation/Conversation';
-import { ConversationDTO, toConversationDTO } from '../ConversationDTO';
+import { toConversationDTO } from '../ConversationDTO';
 
 describe('ConversationDTO', () => {
   let conversation: Conversation;

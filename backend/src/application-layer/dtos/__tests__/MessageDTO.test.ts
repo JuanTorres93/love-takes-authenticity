@@ -1,7 +1,9 @@
+import { MessageDTO } from 'shared';
+
 import { createTestMessage } from '../../../../tests/createEntitiesTest/messageCreate';
 import { messageDTOProperties } from '../../../../tests/dtoProperties/messageDtoProperties';
 import { Message } from '../../../domain/entities/message/Message';
-import { MessageDTO, toMessageDTO } from '../MessageDTO';
+import { toMessageDTO } from '../MessageDTO';
 
 describe('MessageDTO', () => {
   let message: Message;

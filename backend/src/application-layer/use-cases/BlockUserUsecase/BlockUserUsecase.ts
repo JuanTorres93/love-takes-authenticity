@@ -1,6 +1,8 @@
+import { UserMatchesDTO } from 'shared';
+
 import { UserMatchesRepo } from '../../../domain/repos/UserMatchesRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
-import { UserMatchesDTO, toUserMatchesDTO } from '../../dtos/UserMatchesDTO';
+import { toUserMatchesDTO } from '../../dtos/UserMatchesDTO';
 
 export type BlockUserUsecaseRequest = {
   userId: string;

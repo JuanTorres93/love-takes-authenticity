@@ -1,6 +1,8 @@
+import { UserProfileDTO } from 'shared';
+
 import { UserProfilesRepo } from '../../../domain/repos/UserProfilesRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
-import { UserProfileDTO, toUserProfileDTO } from '../../dtos/UserProfileDTO';
+import { toUserProfileDTO } from '../../dtos/UserProfileDTO';
 import { MatchAlgorithm } from '../../services/MatchAlgorithm.port';
 
 export type FindMatchesUsecaseRequest = {

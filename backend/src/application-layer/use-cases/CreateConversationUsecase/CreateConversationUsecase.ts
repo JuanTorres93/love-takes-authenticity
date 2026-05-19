@@ -1,3 +1,5 @@
+import { ConversationDTO } from 'shared';
+
 import { Conversation } from '../../../domain/entities/conversation/Conversation';
 import { ConversationsRepo } from '../../../domain/repos/ConversationsRepo.port';
 import { UsersRepo } from '../../../domain/repos/UsersRepo.port';
@@ -5,7 +7,7 @@ import {
   AlreadyExistsApplicationError,
   NotFoundApplicationError,
 } from '../../common/applicationErrors';
-import { ConversationDTO, toConversationDTO } from '../../dtos/ConversationDTO';
+import { toConversationDTO } from '../../dtos/ConversationDTO';
 import { IdGenerator } from '../../services/IdGenerator.port';
 
 export type CreateConversationUsecaseRequest = {

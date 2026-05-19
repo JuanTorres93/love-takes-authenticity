@@ -1,7 +1,9 @@
+import { MessageDTO } from 'shared';
+
 import { Message } from '../../../domain/entities/message/Message';
 import { ConversationsRepo } from '../../../domain/repos/ConversationsRepo.port';
 import { NotFoundApplicationError } from '../../common/applicationErrors';
-import { MessageDTO, toMessageDTO } from '../../dtos/MessageDTO';
+import { toMessageDTO } from '../../dtos/MessageDTO';
 import { IdGenerator } from '../../services/IdGenerator.port';
 
 export type SendMessageUsecaseRequest = {

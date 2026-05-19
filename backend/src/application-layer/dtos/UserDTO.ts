@@ -1,11 +1,6 @@
-import { User } from '../../domain/entities/user/User';
+import { UserDTO } from 'shared';
 
-export type UserDTO = {
-  id: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { User } from '../../domain/entities/user/User';
 
 export function toUserDTO(user: User): UserDTO {
   return {

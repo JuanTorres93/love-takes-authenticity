@@ -1,13 +1,7 @@
-import { Conversation } from '../../domain/entities/conversation/Conversation';
-import { MessageDTO, toMessageDTO } from './MessageDTO';
+import { ConversationDTO } from 'shared';
 
-export type ConversationDTO = {
-  id: string;
-  participantIds: string[];
-  messages: MessageDTO[];
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { Conversation } from '../../domain/entities/conversation/Conversation';
+import { toMessageDTO } from './MessageDTO';
 
 export function toConversationDTO(conversation: Conversation): ConversationDTO {
   return {
