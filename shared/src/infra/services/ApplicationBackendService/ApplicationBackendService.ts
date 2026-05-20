@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { ConversationDTO, MessageDTO, UserDTO } from 'shared';
+import { ConversationDTO, MessageDTO, SocketResponseData, UserDTO } from 'shared';
 import { SOCKET_EVENTS } from 'shared';
 import { io } from 'socket.io-client';
 
@@ -22,7 +22,11 @@ export class ApplicationBackendService implements BackendService {
     this.serverUrl = envServerUrl;
   }
 
-  async sendMessage(senderId: string, conversationId: string, message: string): Promise<void> {
+  async sendMessage(
+    senderId: string,
+    conversationId: string,
+    message: string,
+  ): Promise<SocketResponseData<string>> {
     await this.connectWebSocket();
 
     const request = {
@@ -31,11 +35,12 @@ export class ApplicationBackendService implements BackendService {
       content: message,
     };
 
-    const response = await this.socket?.emitWithAck(SEND_MESSAGE, request);
+    const response: SocketResponseData<string> = await this.socket?.emitWithAck(
+      SEND_MESSAGE,
+      request,
+    );
 
-    // TODO DELETE THESE DEBUG LOGS
-    console.log('response');
-    console.log(response);
+    return response;
   }
 
   private connectWebSocket(): Promise<void> {

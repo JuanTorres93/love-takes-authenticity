@@ -7,7 +7,14 @@ describe('ApplicationBackendService', () => {
     backendService = new ApplicationBackendService();
   });
 
-  it('should send message', async () => {
-    await backendService.sendMessage('senderId', 'conversationId', 'Hello, World!');
+  it('should return socket response data', async () => {
+    const response = await backendService.sendMessage(
+      'senderId',
+      'conversationId',
+      'Hello, World!',
+    );
+
+    expect(response).toHaveProperty('status');
+    expect(response).toHaveProperty('data');
   });
 });
