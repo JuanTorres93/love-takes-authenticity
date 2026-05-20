@@ -1,8 +1,11 @@
 import dotenv from 'dotenv';
 import { ConversationDTO, MessageDTO, UserDTO } from 'shared';
+import { SOCKET_EVENTS } from 'shared';
 import { io } from 'socket.io-client';
 
 import { BackendService } from '../../../application-layer/services/BackendService.port';
+
+const { SEND_MESSAGE, GET_MESSAGE } = SOCKET_EVENTS;
 
 dotenv.config();
 
@@ -22,8 +25,13 @@ export class ApplicationBackendService implements BackendService {
   async sendMessage(senderId: string, conversationId: string, message: string): Promise<void> {
     await this.connectWebSocket();
 
-    // TODO keep on implementing
-    // TODO run server automatically before running these tests
+    const request = {
+      senderId,
+      conversationId,
+      content: message,
+    };
+
+    this.socket?.emit(SEND_MESSAGE, request);
   }
 
   private connectWebSocket(): Promise<void> {
@@ -37,6 +45,10 @@ export class ApplicationBackendService implements BackendService {
       this.socket.on('connect', () => {
         console.log('Connected to backend via WebSocket');
         resolve();
+      });
+
+      this.socket.on(GET_MESSAGE, (response: { status: string; data: string }) => {
+        console.log('Received message from backend:', response);
       });
 
       this.socket.on('disconnect', () => {

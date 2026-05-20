@@ -1,10 +1,9 @@
 import { createServer } from 'http';
-import { SOCKET_EVENTS } from 'shared';
+import { SOCKET_EVENTS, SocketResponseData } from 'shared';
 import { Server } from 'socket.io';
 
 import { SendMessageUsecaseRequest } from '../../application-layer/use-cases/SendMessageUsecase/SendMessageUsecase';
 import { AppSendMessageUsecase } from '../../interface-adapters/use-cases/AppSendMessageUsecase';
-import { SocketResponseData } from './common/SocketResponseData';
 import { handleSocketIoErrors } from './common/handleSocketIoErrors';
 
 type HttpServer = ReturnType<typeof createServer>;
