@@ -12,10 +12,11 @@
   ],
   "scripts": {
     "install-app": "npm install --workspaces=false && npm install -w backend && npm install -w frontend-web && npm install -w frontend-mobile && npm install -w shared",
-    "test": "npm run test --workspaces",
+    "test": "node scripts/test-server/startTestServer & npm run test --workspaces",
     "test:backend:watch": "npm run test:watch -w backend",
     "test:web:watch": "npm run test:watch -w frontend-web",
     "test:mobile:watch": "npm run test:watch -w frontend-mobile",
+    "test:shared:watch": "node scripts/test-server/startTestServer.js & sleep 2 && npm run test:watch -w shared",
     "prepare": "husky",
     "new-entity": "node scripts/newEntity.js",
     "new-usecase:backend": "node scripts/newUsecase.js backend",
