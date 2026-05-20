@@ -3,7 +3,7 @@ import { Socket } from 'socket.io';
 
 import { isKnownError } from '../../../common/isKnownError';
 
-export function handleSocketIoErrors(socket: Socket, eventName: string, error: Error): void {
+export function handleSocketIoErrors(emitWithAckCallback: Function, error: Error): void {
   const response: SocketResponseData<string> = {
     status: 'error',
     data: 'An unexpected error occurred.',
@@ -13,5 +13,5 @@ export function handleSocketIoErrors(socket: Socket, eventName: string, error: E
     response.data = error.message;
   }
 
-  socket.emit(eventName, response);
+  emitWithAckCallback(response);
 }

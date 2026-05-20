@@ -8,7 +8,7 @@ import { handleSocketIoErrors } from './common/handleSocketIoErrors';
 
 type HttpServer = ReturnType<typeof createServer>;
 
-const { SEND_MESSAGE, GET_MESSAGE } = SOCKET_EVENTS;
+const { SEND_MESSAGE } = SOCKET_EVENTS;
 
 export function createSocketIoApp(httpServer: HttpServer) {
   const io = new Server(httpServer, {
@@ -19,20 +19,23 @@ export function createSocketIoApp(httpServer: HttpServer) {
   io.on('connection', (socket) => {
     console.log('Client connected:', socket.id);
 
-    socket.on(SEND_MESSAGE, async (request: SendMessageUsecaseRequest) => {
-      try {
-        const sentMessage = await AppSendMessageUsecase.execute(request);
+    socket.on(
+      SEND_MESSAGE,
+      async (request: SendMessageUsecaseRequest, sendDataToClientCallback) => {
+        try {
+          const sentMessage = await AppSendMessageUsecase.execute(request);
 
-        const response: SocketResponseData<string> = {
-          status: 'success',
-          data: sentMessage.content,
-        };
+          const response: SocketResponseData<string> = {
+            status: 'success',
+            data: sentMessage.content,
+          };
 
-        socket.emit(GET_MESSAGE, response);
-      } catch (error) {
-        handleSocketIoErrors(socket, GET_MESSAGE, error as Error);
-      }
-    });
+          sendDataToClientCallback(response);
+        } catch (error) {
+          handleSocketIoErrors(sendDataToClientCallback, error as Error);
+        }
+      },
+    );
   });
 
   return io;

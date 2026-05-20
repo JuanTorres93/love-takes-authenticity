@@ -31,7 +31,11 @@ export class ApplicationBackendService implements BackendService {
       content: message,
     };
 
-    this.socket?.emit(SEND_MESSAGE, request);
+    const response = await this.socket?.emitWithAck(SEND_MESSAGE, request);
+
+    // TODO DELETE THESE DEBUG LOGS
+    console.log('response');
+    console.log(response);
   }
 
   private connectWebSocket(): Promise<void> {
@@ -45,10 +49,6 @@ export class ApplicationBackendService implements BackendService {
       this.socket.on('connect', () => {
         console.log('Connected to backend via WebSocket');
         resolve();
-      });
-
-      this.socket.on(GET_MESSAGE, (response: { status: string; data: string }) => {
-        console.log('Received message from backend:', response);
       });
 
       this.socket.on('disconnect', () => {
